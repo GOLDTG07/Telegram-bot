@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ro'yxatdan O'tish va Chat Tizimi</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, rgb(106, 17, 203), rgb(37, 117, 252));
+      color: white;
+      padding: 20px;
+    }
+
+    .container {
+      width: 400px;
+      margin: auto;
+      background: rgb(30, 30, 47);
+      padding: 30px;
+      border-radius: 20px;
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+    }
+
+    h2 {
+      text-align: center;
+      margin-bottom: 20px;
+      color: rgb(249, 211, 66);
+    }
+
+    input, button {
+      width: 100%;
+      padding: 12px;
+      margin: 10px 0;
+      border: none;
+      border-radius: 10px;
+      font-size: 16px;
+    }
+
+    button {
+      background: linear-gradient(135deg, rgb(15, 155, 15), rgb(249, 211, 66));
+      color: white;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    #chat, #menu {
+      display: none;
+    }
+
+    #messages {
+      height: 300px;
+      overflow-y: auto;
+      background: rgb(43, 45, 66);
+      padding: 15px;
+      border-radius: 10px;
+      margin-bottom: 15px;
+    }
+
+    .menu-btn {
+      margin: 5px 0;
+      background: linear-gradient(135deg, rgb(249, 211, 66), rgb(37, 117, 252));
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Ro'yxatdan o'tish oynasi -->
+  <div class="container" id="registration">
+    <h2>Ro'yxatdan O'tish</h2>
+    <input type="text" id="firstName" placeholder="Ismingiz">
+    <input type="text" id="lastName" placeholder="Familiyangiz">
+    <input type="password" id="password" placeholder="Parol">
+    <input type="text" id="class" placeholder="Sinfingiz">
+    <input type="text" id="school" placeholder="Maktabinggiz">
+    <button onclick="register()">Ro'yxatdan O'tish</button>
+  </div>
+
+  <!-- Chat tizimi -->
+  <div class="container" id="menu">
+    <h2>Asosiy Menu</h2>
+    <button class="menu-btn" onclick="openChat()">Xabar yozish</button>
+    <button class="menu-btn" onclick="showFriends()">Do'stlar ro'yxati</button>
+    <button class="menu-btn" onclick="openSettings()">Sozlamalar</button>
+    <button class="menu-btn" onclick="logout()">Chiqish</button>
+  </div>
+
+  <div class="container" id="chat">
+    <h2>Chat Xonasi</h2>
+    <div id="messages"></div>
+    <input type="text" id="messageInput" placeholder="Xabar yozing...">
+    <button onclick="sendMessage()">Yuborish</button>
+    <button onclick="backToMenu()">Orqaga</button>
+  </div>
+
+  <script>
+    let currentUser = "";
+
+    // Ro'yxatdan o'tish funksiyasi
+    function register() {
+      const firstName = document.getElementById('firstName').value.trim();
+      const lastName = document.getElementById('lastName').value.trim();
+      const password = document.getElementById('password').value.trim();
+      const classInfo = document.getElementById('class').value.trim();
+      const school = document.getElementById('school').value.trim();
+
+      if (firstName && lastName && password && classInfo && school) {
+        currentUser = `${firstName} ${lastName}`;
+        document.getElementById('registration').style.display = 'none';
+        document.getElementById('menu').style.display = 'block';
+      } else {
+        alert("Iltimos, barcha maydonlarni to'ldiring!");
+      }
+    }
+
+    // Chatga kirish funksiyasi
+    function openChat() {
+      document.getElementById('menu').style.display = 'none';
+      document.getElementById('chat').style.display = 'block';
+    }
+
+    // Xabar yuborish funksiyasi
+    function sendMessage() {
+      const messageInput = document.getElementById('messageInput').value;
+      const messagesDiv = document.getElementById('messages');
+      if (messageInput.trim() !== '') {
+        messagesDiv.innerHTML += `<p><b>${currentUser}:</b> ${messageInput}</p>`;
+        document.getElementById('messageInput').value = '';
+      }
+    }
+
+    // Do'stlar ro'yxati funksiyasi
+    function showFriends() {
+      alert("Do'stlar ro'yxati hozircha mavjud emas.");
+    }
+
+    // Sozlamalar funksiyasi
+    function openSettings() {
+      alert("Sozlamalar bo'limi tez orada qo'shiladi.");
+    }
+
+    // Chiqish funksiyasi
+    function logout() {
+      location.reload(); // Sahifani qayta yuklash
+    }
+
+    // Menuga qaytish
+    function backToMenu() {
+      document.getElementById('chat').style.display = 'none';
+      document.getElementById('menu').style.display = 'block';
+    }
+  </script>
+
+</body>
+</html>
